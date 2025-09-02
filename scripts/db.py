@@ -49,4 +49,23 @@ print(con.execute("SELECT * FROM orders").fetchall())
 print(con.execute("SELECT * FROM customers").fetchall())
 
 
+## Basic selection and filtering
+print("Orders with amount > 100:")
+con.execute("""
+SELECT order_id, amount
+FROM orders
+WHERE amount >= 100
+ORDER BY amount DESC
+LIMIT 5;
+""")
 
+print(con.fetchall())
+
+print("Total amount per customer:")
+## join with lookup table
+con.execute("""
+SELECT o.order_id, c.city, o.amount
+FROM orders o 
+LEFT JOIN customers c USING (customer_id);
+""")
+print(con.fetchall())
